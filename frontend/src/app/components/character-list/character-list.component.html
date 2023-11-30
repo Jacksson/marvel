@@ -1,0 +1,21 @@
+<!-- character-list.component.html -->
+
+<h2>Lista de Personajes</h2>
+<div class="character-list">
+  <div *ngFor="let character of characters" class="character-item" (click)="showCharacterDetails(character)">
+    <img [src]="character.thumbnail.path + '.' + character.thumbnail.extension" alt="{{ character.name }}" class="character-thumbnail">
+    <div class="character-details">
+      <h2>{{ character.name }}</h2>
+      <p>{{ character.description }}</p>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="!characters || characters.length === 0">
+  <p>No se encontraron personajes.</p>
+</div>
+
+<app-character-details
+  *ngIf="selectedCharacter"
+  (close)="closeCharacterDetails()"
+></app-character-details>

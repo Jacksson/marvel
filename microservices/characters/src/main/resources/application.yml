@@ -1,0 +1,21 @@
+# Configuración para H2 Database
+spring:
+    datasource:
+      url: jdbc:h2:mem:testdb
+      username: sa
+      password: password
+      driver-class-name: org.h2.Driver
+    h2:
+        console:
+            enabled: true
+            settings:
+                web-allow-others: true
+
+marvel:
+    api:
+        public-key: your_public_key
+        private-key: your_private_key
+
+logging:
+    level:
+        org.springframework.aop: DEBUG

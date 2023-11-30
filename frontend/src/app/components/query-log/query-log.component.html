@@ -1,0 +1,25 @@
+<!-- query-log.component.html -->
+
+<div *ngIf="queryLogs && queryLogs.length > 0">
+  <h2>Query Logs</h2>
+  <table class="table">
+    <thead>
+    <tr>
+      <th>ID</th>
+      <th>Method Name</th>
+      <th>Query Time</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let log of queryLogs">
+      <td>{{ log.id }}</td>
+      <td>{{ log.methodName }}</td>
+      <td>{{ formatQueryTime(log.queryTime) }}</td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="queryLogs && queryLogs.length === 0">
+  <p>No query logs available.</p>
+</div>

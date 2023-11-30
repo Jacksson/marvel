@@ -1,0 +1,42 @@
+/* character-list.component.css */
+
+.character-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+}
+
+.character-item {
+  width: 300px;
+  margin: 16px;
+  padding: 16px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease-in-out;
+}
+
+.character-item:hover {
+  transform: scale(1.05);
+}
+
+.character-thumbnail {
+  width: 100%;
+  height: auto;
+  border-radius: 8px;
+}
+
+.character-details {
+  margin-top: 12px;
+}
+
+.character-details h2 {
+  font-size: 1.2em;
+  margin-bottom: 8px;
+}
+
+.character-details p {
+  font-size: 1em;
+  color: #666;
+}
+
