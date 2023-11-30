@@ -13,8 +13,10 @@ spring:
 
 marvel:
     api:
-        public-key: your_public_key
-        private-key: your_private_key
+        baseUrl: "https://gateway.marvel.com/v1/public/"
+        charactersEndpoint: "characters"
+        publicKey: "05806db8184c39bef6b92a7a521b5a25"
+        privateKey: "320d759b76193aabd3ae17b5367752de33987ee8"
 
 logging:
     level:

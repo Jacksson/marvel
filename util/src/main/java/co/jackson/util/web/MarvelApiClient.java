@@ -1,9 +1,11 @@
 package co.jackson.util.web;
 
 import co.jackson.marvel.composite.character.CharacterAggregate;
+import co.jackson.util.config.MarvelApiProperties;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.stereotype.Component;
 import org.springframework.web.client.HttpClientErrorException;
@@ -20,15 +22,17 @@ import java.util.List;
 @Slf4j
 @Component
 public class MarvelApiClient {
-    private static final String API_BASE_URL = "https://gateway.marvel.com/v1/public/";
-    private static final String API_CHARACTERS_ENDPOINT = "characters";
-    private static final String API_PUBLIC_KEY = "05806db8184c39bef6b92a7a521b5a25";
-    private static final String API_PRIVATE_KEY = "320d759b76193aabd3ae17b5367752de33987ee8";
 
+    private final MarvelApiProperties apiProperties;
+
+    @Autowired
+    public MarvelApiClient(MarvelApiProperties apiProperties) {
+        this.apiProperties = apiProperties;
+    }
 
     public List<CharacterAggregate> listCharacters() {
         try {
-            String url = buildUrl(API_CHARACTERS_ENDPOINT);
+            String url = buildUrl(apiProperties.getCharactersEndpoint());
             String response = sendRequest(url);
 
             ObjectMapper objectMapper = new ObjectMapper();
@@ -51,7 +55,7 @@ public class MarvelApiClient {
 
     public CharacterAggregate getCharacterById(Long characterId) {
         try {
-            String endpoint = API_CHARACTERS_ENDPOINT + "/" + characterId;
+            String endpoint = apiProperties.getCharactersEndpoint() + "/" + characterId;
             String url = buildUrl(endpoint);
             String response = sendRequest(url);
 
@@ -68,9 +72,16 @@ public class MarvelApiClient {
 
     private String buildUrl(String endpoint) {
         long timestamp = System.currentTimeMillis();
-        String hash = generateHash(timestamp, API_PRIVATE_KEY, API_PUBLIC_KEY);
+        String hash = generateHash(timestamp, apiProperties.getPrivateKey(), apiProperties.getPublicKey());
 
-        return String.format("%s%s?apikey=%s&ts=%d&hash=%s", API_BASE_URL, endpoint, API_PUBLIC_KEY, timestamp, hash);
+        return String.format(
+            "%s%s?apikey=%s&ts=%d&hash=%s",
+            apiProperties.getBaseUrl(),
+            endpoint,
+            apiProperties.getPublicKey(),
+            timestamp,
+            hash
+        );
     }
 
     private String sendRequest(String url) throws IOException {

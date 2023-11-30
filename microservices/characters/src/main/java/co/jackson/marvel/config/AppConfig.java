@@ -1,4 +1,4 @@
-package co.jackson.marvel;
+package co.jackson.marvel.config;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.context.annotation.Bean;
